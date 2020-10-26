@@ -1,5 +1,5 @@
 {
-  "name": "dce-react",
+  "name": "ec-react",
   "version": "1.0.0",
   "private": true,
   "dependencies": {
@@ -75,7 +75,7 @@
     "stylelint-no-indistinguishable-colors": "^1.2.1",
     "stylelint-scss": "^3.5.4"
   },
-  "title": "dce-react",
+  "title": "ec-react",
   "jest": {
     "moduleNameMapper": {
       "~screens(.*)": "<rootDir>/src/app/screens/$1",
