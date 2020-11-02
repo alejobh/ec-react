@@ -1,0 +1,18 @@
+@import '../../styles/colors';
+
+.button-form {
+  button {
+    border-radius: 5px;
+    border: 2px solid #BED23C;
+    color: #BED23C;
+    font-size: 16px;
+    padding: 7px 0;
+    text-align: center;
+    width: 100%;
+  }
+
+  .btn-fill {
+    background: #BED23C;
+    color: #FFF;
+  }
+}

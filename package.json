@@ -11,7 +11,8 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.3",
-    "wolox-equalizer": "0.0.3"
+    "wolox-equalizer": "0.0.3",
+    "react-hook-form": "^6.9.6"
   },
   "scripts": {
     "start": "node ./scripts/start.js development",
