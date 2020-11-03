@@ -1,12 +1,12 @@
 import React from 'react';
 
-import './Signup.scss';
-
 import SignupForm from '../../components/SignupForm';
+
+import styles from './Signup.module.scss';
 
 function Signup() {
   return (
-    <div className="signup">
+    <div className={styles.signup}>
       <SignupForm />
     </div>
   );
