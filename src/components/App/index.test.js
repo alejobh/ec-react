@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 
-import App from './index';
+import App from '.';
 
 describe('#App', () => {
   let component = null;
