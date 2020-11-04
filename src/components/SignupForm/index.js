@@ -5,15 +5,14 @@ import UserService from '../../services/userService';
 import logo from '../../assets/logo.png';
 import spin from '../../assets/spin.gif';
 import ButtonForm from '../ButtonForm';
+import { isPasswordEqual, emailPattern } from '../../utils';
 
-import './SignupForm.scss';
+import styles from './SignupForm.module.scss';
 
 function SignupForm() {
   const { register, handleSubmit, errors, getValues } = useForm();
   const [isLoading, setIsLoading] = useState();
   const [submitErrors, setSubmitErrors] = useState([]);
-
-  const isPasswordEqual = (password: string) => password === getValues('password');
 
   const userHttpService = new UserService();
 
@@ -40,8 +39,8 @@ function SignupForm() {
   });
 
   return (
-    <div className="signup-form">
-      <img src={logo} className="logo" />
+    <div className={styles.signupForm}>
+      <img src={logo} className={styles.logo} />
       {submitErrors.map(error => (
         <div key={error} className="submit-errors">
           - {error}
@@ -49,54 +48,63 @@ function SignupForm() {
       ))}
       <form onSubmit={onSubmit}>
         <div>
-          <label>Nombre</label>
-          <span className="error">{errors.firstName && errors.firstName.message}</span>
-          <input name="firstName" ref={register({ required: 'Requerido' })} />
+          <label className={styles.label}>Nombre</label>
+          {errors.firstName && <span className={styles.error}>{errors.firstName.message}</span>}
+          <input className={styles.input} name="firstName" ref={register({ required: 'Requerido' })} />
         </div>
         <div>
-          <label>Apellido</label>
-          <span className="error">{errors.lastName && errors.lastName.message}</span>
-          <input name="lastName" ref={register({ required: 'Requerido' })} />
+          <label className={styles.label}>Apellido</label>
+          {errors.lastName && <span className={styles.error}>{errors.lastName.message}</span>}
+          <input className={styles.input} name="lastName" ref={register({ required: 'Requerido' })} />
         </div>
         <div>
-          <label>Email</label>
-          <span className="error">{errors.email && errors.email.message}</span>
+          <label className={styles.label}>Email</label>
+          {errors.email && <span className={styles.error}>{errors.email.message}</span>}
           <input
+            className={styles.input}
             name="email"
             ref={register({
               required: 'Requerido',
-              pattern: {
-                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                message: 'email inválido'
-              }
+              pattern: emailPattern
             })}
           />
         </div>
         <div>
-          <label>Password</label>
-          <span className="error">{errors.password && errors.password.message}</span>
-          <input name="password" type="password" ref={register({ required: 'Requerido' })} />
+          <label className={styles.label}>Password</label>
+          {errors.password && <span className={styles.error}>{errors.password.message}</span>}
+          <input
+            className={styles.input}
+            name="password"
+            type="password"
+            ref={register({ required: 'Requerido' })}
+          />
         </div>
         <div>
-          <label>Confirmación de Password</label>
-          <span className="error">
-            {errors.confirmPassword && errors.confirmPassword.message}
-            {errors.confirmPassword && errors.confirmPassword.type === 'validate' && (
-              <div className="error">Las contraseñas deben coincidir</div>
-            )}
-          </span>
+          <label className={styles.label}>Confirmación de Password</label>
+          {errors.confirmPassword && (
+            <span className={styles.error}>
+              {errors.confirmPassword.message}
+              {errors.confirmPassword.type === 'validate' && (
+                <div className={styles.error}>Las contraseñas deben coincidir</div>
+              )}
+            </span>
+          )}
           <input
+            className={styles.input}
             name="confirmPassword"
             type="password"
-            ref={register({ required: 'Requerido', validate: isPasswordEqual })}
+            ref={register({
+              required: 'Requerido',
+              validate: confirmPassword => isPasswordEqual(confirmPassword, getValues('password'))
+            })}
           />
         </div>
         {isLoading ? (
-          <img src={spin} className="logo" />
+          <img src={spin} />
         ) : (
           <>
             <ButtonForm type="submit" text="Sign Up" isFilled />
-            <div className="divider" />
+            <div className={styles.divider} />
             <ButtonForm text="Login" type="button" />
           </>
         )}

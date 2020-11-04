@@ -1,13 +1,18 @@
 import React from 'react';
-import './ButtonForm.scss';
 import PropTypes from 'prop-types';
+import clsx from 'clsx';
+
+import styles from './ButtonForm.module.scss';
 
 function ButtonForm(props) {
+  const { type, isFilled, text } = props;
+  const { buttonFill, button } = styles;
+
   /* eslint-disable react/button-has-type */
   return (
-    <div className="button-form">
-      <button type={props.type} className={`button ${props.isFilled ? 'btn-fill' : ''}`}>
-        {props.text}
+    <div>
+      <button type={type} className={clsx(button, isFilled && buttonFill)}>
+        {text}
       </button>
     </div>
   );
