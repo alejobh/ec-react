@@ -1,8 +1,8 @@
 import React from 'react';
 
-import Signup from './screens/Signup';
+import Signup from '../../screens/Signup';
 
-import './App.scss';
+import './App.module.scss';
 
 function App() {
   return (
