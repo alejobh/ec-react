@@ -42,7 +42,7 @@ function SignupForm() {
     <div className={styles.signupForm}>
       <img src={logo} className={styles.logo} />
       {submitErrors.map(error => (
-        <div key={error} className="submit-errors">
+        <div className={styles.submitErrors} key={error}>
           - {error}
         </div>
       ))}
