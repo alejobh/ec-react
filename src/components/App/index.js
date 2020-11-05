@@ -2,11 +2,11 @@ import React from 'react';
 
 import Signup from '../../screens/Signup';
 
-import './styles.module.scss';
+import styles from './styles.module.scss';
 
 function App() {
   return (
-    <div className="app">
+    <div className={styles.app}>
       <Signup />
     </div>
   );

@@ -4,8 +4,7 @@ import clsx from 'clsx';
 
 import styles from './ButtonForm.module.scss';
 
-function ButtonForm(props) {
-  const { type, isFilled, text } = props;
+function ButtonForm({ type, isFilled, text }) {
   const { buttonFill, button } = styles;
 
   /* eslint-disable react/button-has-type */
