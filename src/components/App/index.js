@@ -2,7 +2,7 @@ import React from 'react';
 
 import Signup from '../../screens/Signup';
 
-import './App.module.scss';
+import './styles.module.scss';
 
 function App() {
   return (
