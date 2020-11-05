@@ -1,21 +1,18 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 
-import UserService from '../../services/userService';
+import { signUp } from '../../services/userService';
 import logo from '../../assets/logo.png';
 import spin from '../../assets/spin.gif';
 import ButtonForm from '../ButtonForm';
 import { isPasswordEqual, emailPattern } from '../../utils';
+import useRequest from '../../hooks/useRequest';
 
 import styles from './SignupForm.module.scss';
 
 function SignupForm() {
   const { register, handleSubmit, errors, getValues } = useForm();
-  const [isLoading, setIsLoading] = useState();
-  const [submitErrors, setSubmitErrors] = useState([]);
-
-  const userHttpService = new UserService();
-
+  const [isLoading, submitErrors, setSubmit] = useRequest(signUp);
   const onSubmit = handleSubmit(({ firstName, lastName, email, password, confirmPassword }) => {
     const USER = {
       firstName,
@@ -24,18 +21,7 @@ function SignupForm() {
       password,
       confirmPassword
     };
-
-    setIsLoading(true);
-    userHttpService.signUp(USER).then(response => {
-      if (!response.ok && response.data.errors && response.data.errors.full_messages) {
-        setSubmitErrors(response.data.errors.full_messages);
-      } else {
-        // eslint-disable-next-line no-console
-        console.log(response);
-        setSubmitErrors([]);
-      }
-      setIsLoading(false);
-    });
+    setSubmit(USER);
   });
 
   return (
