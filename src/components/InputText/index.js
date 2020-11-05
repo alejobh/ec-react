@@ -3,22 +3,21 @@ import PropTypes from 'prop-types';
 
 import styles from './styles.module.scss';
 
-function InputText({ label, type, name, reference, errors }) {
+function InputText({ label, type = 'text', name, inputRef, error }) {
   return (
-    <>
+    <div className={styles.inputText}>
       <label className={styles.label}>{label}</label>
-      {errors && <span className={styles.error}>{errors.message}</span>}
-      <input className={styles.input} name={name} type={type} ref={reference} />
-    </>
+      {error && <span className={styles.error}>{error}</span>}
+      <input className={styles.input} name={name} type={type} ref={inputRef} />
+    </div>
   );
 }
 
 InputText.propTypes = {
-  /* eslint-disable react/forbid-prop-types */
-  errors: PropTypes.object,
+  error: PropTypes.string,
+  inputRef: PropTypes.func,
   label: PropTypes.string,
   name: PropTypes.string,
-  reference: PropTypes.func,
   type: PropTypes.string
 };
 

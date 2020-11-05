@@ -1,17 +1,22 @@
 @import 'variables/colors';
 
+.input-text {
+  display: flex;
+  flex-direction: column;
+}
+
 .label {
   color: $black-main;
   display: block;
-  text-align: left;
   font-size: 16px;
+  text-align: left;
 }
 
 .input {
   color: $black-main;
   font-size: 16px;
-  padding: 11px;
   margin: 15px 0;
+  padding: 11px;
   width: 100%;
 }
 

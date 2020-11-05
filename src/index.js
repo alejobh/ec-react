@@ -6,8 +6,6 @@ import App from './components/App';
 import './scss/application.scss';
 import { register } from './serviceWorker';
 
-import './index.scss';
-
 const render = () => {
   ReactDOM.render(
     <AppContainer>

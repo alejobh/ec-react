@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import logo from '../../app/assets/logo.png';
 import ButtonForm from '../ButtonForm';
 import InputText from '../InputText';
-import { isPasswordEqual, emailPattern } from '../../utils';
+import { isPasswordEqual, emailPattern } from '../../utils/formValidations';
 
 import { AUTH_INPUTS } from './fields';
 import styles from './styles.module.scss';
@@ -31,38 +31,38 @@ function SignupForm() {
           label="Nombre"
           type="text"
           name={AUTH_INPUTS.firstName}
-          reference={register({ required: 'Requerido' })}
-          errors={errors[AUTH_INPUTS.firstName]}
+          inputRef={register({ required: 'Requerido' })}
+          error={errors[AUTH_INPUTS.firstName]?.message}
         />
         <InputText
           label="Apellido"
           type="text"
           name={AUTH_INPUTS.lastName}
-          reference={register({ required: 'Requerido' })}
-          errors={errors[AUTH_INPUTS.lastName]}
+          inputRef={register({ required: 'Requerido' })}
+          error={errors[AUTH_INPUTS.lastName]?.message}
         />
         <InputText
           label="Email"
           type="text"
           name={AUTH_INPUTS.email}
-          reference={register({
+          inputRef={register({
             required: 'Requerido',
             pattern: emailPattern
           })}
-          errors={errors[AUTH_INPUTS.email]}
+          error={errors[AUTH_INPUTS.email]?.message}
         />
         <InputText
           label="Password"
           type="password"
           name={AUTH_INPUTS.password}
-          reference={register({ required: 'Requerido' })}
-          errors={errors[AUTH_INPUTS.password]}
+          inputRef={register({ required: 'Requerido' })}
+          error={errors[AUTH_INPUTS.password]?.message}
         />
         <InputText
           label="Confirmar password"
           type="password"
           name={AUTH_INPUTS.confirmPassword}
-          reference={register({
+          inputRef={register({
             required: 'Requerido',
             validate: confirmPassword => {
               if (!isPasswordEqual(confirmPassword, getValues('password'))) {
@@ -71,7 +71,7 @@ function SignupForm() {
               return true;
             }
           })}
-          errors={errors[AUTH_INPUTS.confirmPassword]}
+          error={errors[AUTH_INPUTS.confirmPassword]?.message}
         />
         <ButtonForm type="submit" isFilled>
           Sign Up
