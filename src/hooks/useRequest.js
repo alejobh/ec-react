@@ -20,11 +20,13 @@ const useRequest = resource => {
         setIsSuccess(true);
         setResponse(data);
         setSubmitErrors([]);
+        // eslint-disable-next-line no-console
+        console.log(data);
       }
       setIsLoading(false);
     });
   }, [resource, submit]);
-  return [isLoading, submitErrors, isSuccess, response, setSubmit];
+  return [isLoading, submitErrors, setSubmit, isSuccess, response];
 };
 
 export default useRequest;
