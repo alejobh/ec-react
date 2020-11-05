@@ -8,6 +8,17 @@
   padding: 7px 0;
   text-align: center;
   width: 100%;
+  margin: 20px auto;
+}
+
+.button:nth-of-type(2)::before {
+  content: '';
+  background: $gray-main;
+  height: 2px;
+  left: 0;
+  position: relative;
+  display: block;
+  top: -30px;
 }
 
 .button-fill {

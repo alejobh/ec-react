@@ -76,7 +76,6 @@ function SignupForm() {
         <ButtonForm type="submit" isFilled>
           Sign Up
         </ButtonForm>
-        <div className={styles.divider} />
         <ButtonForm type="button">Login</ButtonForm>
       </form>
     </div>
