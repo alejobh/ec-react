@@ -2,16 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 
-import styles from './ButtonForm.module.scss';
+import styles from './styles.module.scss';
 
-function ButtonForm({ type, isFilled, text }) {
-  const { buttonFill, button } = styles;
-
+function ButtonForm({ type, isFilled, children }) {
   /* eslint-disable react/button-has-type */
   return (
     <div>
-      <button type={type} className={clsx(button, isFilled && buttonFill)}>
-        {text}
+      <button type={type} className={clsx(styles.button, { [styles.buttonFill]: isFilled })}>
+        {children}
       </button>
     </div>
   );
@@ -19,7 +17,6 @@ function ButtonForm({ type, isFilled, text }) {
 
 ButtonForm.propTypes = {
   isFilled: PropTypes.bool,
-  text: PropTypes.string,
   type: PropTypes.string
 };
 

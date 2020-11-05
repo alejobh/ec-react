@@ -1,0 +1,20 @@
+@import 'variables/colors';
+
+.label {
+  color: $black-main;
+  display: block;
+  text-align: left;
+  font-size: 16px;
+}
+
+.input {
+  color: $black-main;
+  font-size: 16px;
+  padding: 11px;
+  margin: 15px 0;
+  width: 100%;
+}
+
+.error {
+  color: $red-main;
+}
