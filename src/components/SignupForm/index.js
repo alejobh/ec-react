@@ -87,9 +87,10 @@ function SignupForm() {
           <img src={spin} />
         ) : (
           <>
-            <ButtonForm type="submit" text={t('button.signup')} isFilled />
-            <div className={styles.divider} />
-            <ButtonForm text={t('button.login')} type="button" />
+            <ButtonForm type="submit" isFilled>
+              {t('button.signup')}
+            </ButtonForm>
+            <ButtonForm type="button">{t('button.login')}</ButtonForm>
           </>
         )}
       </form>
