@@ -1,41 +1,81 @@
 import React from 'react';
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
-import { render, fireEvent, waitFor, screen } from '@testing-library/react';
+import { render, fireEvent, waitForElement, screen } from '@testing-library/react';
+import 'mutationobserver-shim';
 
 import '@testing-library/jest-dom/extend-expect';
 import SignupForm from './index';
 
 const statusServerError = 500;
 
-const server = setupServer(
-  rest.get('/signup', (req, res, ctx) => res(ctx.json({ greeting: 'hello there' })))
-);
+const server = setupServer();
+
+const OLD_ENV = process.env;
 
 beforeAll(() => server.listen());
 afterEach(() => server.resetHandlers());
-afterAll(() => server.close());
 
-test('loads and displays greeting', async () => {
-  render(<SignupForm url="/greeting" />);
-
-  fireEvent.click(screen.getByText('Load Greeting'));
-
-  await waitFor(() => screen.getByRole('heading'));
-
-  expect(screen.getByRole('heading')).toHaveTextContent('hello there');
-  expect(screen.getByRole('button')).toHaveAttribute('disabled');
+beforeEach(() => {
+  jest.resetModules();
+  process.env = { ...OLD_ENV };
+  process.env.REACT_APP_BASE_API_URL = 'api-test';
 });
 
-test('handles server error', async () => {
-  server.use(rest.get('/greeting', (req, res, ctx) => res(ctx.status(statusServerError))));
+afterAll(() => {
+  process.env = OLD_ENV;
+  server.close();
+});
 
-  render(<SignupForm url="/greeting" />);
+test('All fields are completed', async () => {
+  server.use(rest.get('api-test/signup', (req, res, ctx) => res(ctx.status(statusServerError))));
 
-  fireEvent.click(screen.getByText('Load Greeting'));
+  render(<SignupForm />);
 
-  await waitFor(() => screen.getByRole('alert'));
+  const inputName = screen.getByLabelText('signup.form.name.label');
 
-  expect(screen.getByRole('alert')).toHaveTextContent('Oops, failed to fetch!');
-  expect(screen.getByRole('button')).not.toHaveAttribute('disabled');
+  fireEvent.change(inputName, { target: { value: 'First Name Example' } });
+
+  fireEvent.click(screen.getByRole('button', { name: 'button.signup' }));
+
+  await waitForElement(() => screen.queryAllByText('required'));
+  const inputsAmmount = 4;
+
+  expect(screen.queryAllByText('required').length).toBe(inputsAmmount);
+});
+
+test('The email is invalid', async () => {
+  render(<SignupForm />);
+
+  const inputEmail = screen.getByLabelText('signup.form.email.label');
+
+  fireEvent.change(inputEmail, { target: { value: 'Invalidmail@' } });
+
+  fireEvent.click(screen.getByRole('button', { name: 'button.signup' }));
+
+  await waitForElement(() => screen.queryAllByText('email inválido'));
+
+  expect(screen.getByText('email inválido')).toHaveTextContent('email inválido');
+});
+
+test('Passwords do not match', async () => {
+  render(<SignupForm />);
+
+  const inputName = screen.getByLabelText('signup.form.name.label');
+  const inputLastName = screen.getByLabelText('signup.form.lastName.label');
+  const inputEmail = screen.getByLabelText('signup.form.email.label');
+  const inputPassword = screen.getByLabelText('signup.form.password.label');
+  const inputConfirmPassword = screen.getByLabelText('signup.form.confirmPassword.label');
+
+  fireEvent.change(inputName, { target: { value: 'Name' } });
+  fireEvent.change(inputLastName, { target: { value: 'Last Name' } });
+  fireEvent.change(inputEmail, { target: { value: 'example@example.com' } });
+  fireEvent.change(inputPassword, { target: { value: 'password1' } });
+  fireEvent.change(inputConfirmPassword, { target: { value: 'password2' } });
+
+  fireEvent.click(screen.getByRole('button', { name: 'button.signup' }));
+
+  await waitForElement(() => screen.queryAllByText('signup.form.confirmPassword.error'));
+
+  expect(screen.queryAllByText('signup.form.confirmPassword.error').length).toBe(1);
 });
