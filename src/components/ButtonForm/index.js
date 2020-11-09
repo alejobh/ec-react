@@ -4,7 +4,7 @@ import clsx from 'clsx';
 
 import styles from './styles.module.scss';
 
-function ButtonForm({ type, isFilled, isDivider, children }) {
+function ButtonForm({ type = 'button', isFilled, isDivider, children }) {
   /* eslint-disable react/button-has-type */
   return (
     <button

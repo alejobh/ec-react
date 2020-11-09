@@ -87,9 +87,7 @@ function SignupForm() {
             <ButtonForm type="submit" isFilled>
               {t('button.signup')}
             </ButtonForm>
-            <ButtonForm type="button" isDivider>
-              {t('button.login')}
-            </ButtonForm>
+            <ButtonForm isDivider>{t('button.login')}</ButtonForm>
           </>
         )}
       </form>
