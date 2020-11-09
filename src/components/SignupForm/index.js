@@ -73,9 +73,7 @@ function SignupForm() {
         <ButtonForm type="submit" isFilled>
           Sign Up
         </ButtonForm>
-        <ButtonForm type="button" isDivider>
-          Login
-        </ButtonForm>
+        <ButtonForm isDivider>Login</ButtonForm>
       </form>
     </div>
   );
