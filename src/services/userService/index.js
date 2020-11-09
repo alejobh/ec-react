@@ -10,11 +10,9 @@ const API = create({
 });
 
 export const login = credentials =>
-  API.post('/users/sessions', {
-    session: {
-      email: credentials.email,
-      password: credentials.password
-    }
+  API.post('/users/sign_in', {
+    email: credentials.email,
+    password: credentials.password
   });
 
 export const signUp = userData =>

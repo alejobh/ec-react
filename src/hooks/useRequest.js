@@ -14,8 +14,12 @@ const useRequest = resource => {
 
     setIsLoading(true);
     resource(submit).then(data => {
-      if (!data.ok && data.data.errors && data.data.errors.full_messages) {
-        setSubmitErrors(data.data.errors.full_messages);
+      if (!data.ok && data.data.errors) {
+        if (data.data.errors.full_messages) {
+          setSubmitErrors(data.data.errors.full_messages);
+        } else {
+          setSubmitErrors(data.data.errors);
+        }
       } else {
         setIsSuccess(true);
         setResponse(data);

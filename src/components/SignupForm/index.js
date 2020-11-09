@@ -1,6 +1,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 
 import logo from '../../app/assets/logo.png';
 import ButtonForm from '../ButtonForm';
@@ -87,9 +88,11 @@ function SignupForm() {
             <ButtonForm type="submit" isFilled>
               {t('button.signup')}
             </ButtonForm>
-            <ButtonForm type="button" isDivider>
-              {t('button.login')}
-            </ButtonForm>
+            <Link to="/signin">
+              <ButtonForm type="button" isDivider>
+                {t('button.login')}
+              </ButtonForm>
+            </Link>
           </>
         )}
       </form>
