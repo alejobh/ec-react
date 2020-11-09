@@ -1,0 +1,13 @@
+@import 'variables/colors';
+
+.signup-form {
+  background-color: $white-main;
+  border-top: 6px solid $blue;
+  margin: 30px auto;
+  max-width: 300px;
+  padding: 40px 20px 10px;
+}
+
+.logo {
+  margin: 0 auto 30px;
+}
