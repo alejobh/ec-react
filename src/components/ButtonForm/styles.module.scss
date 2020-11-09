@@ -11,13 +11,13 @@
   margin: 20px auto;
 }
 
-.button:nth-of-type(2)::before {
+.is-divider::before {
   content: '';
   background: $gray-main;
   height: 2px;
   left: 0;
   position: relative;
-  display: block;
+  display: flex;
   top: -30px;
 }
 
