@@ -39,21 +39,18 @@ function SignupForm() {
       <form onSubmit={onSubmit}>
         <InputText
           label={t('signup.form.name.label')}
-          type="text"
           name={AUTH_INPUTS.firstName}
           inputRef={register({ required: t('required') })}
           error={errors[AUTH_INPUTS.firstName]?.message}
         />
         <InputText
           label={t('signup.form.lastName.label')}
-          type="text"
           name={AUTH_INPUTS.lastName}
           inputRef={register({ required: t('required') })}
           error={errors[AUTH_INPUTS.lastName]?.message}
         />
         <InputText
           label={t('signup.form.email.label')}
-          type="text"
           name={AUTH_INPUTS.email}
           inputRef={register({
             required: t('required'),
@@ -90,7 +87,9 @@ function SignupForm() {
             <ButtonForm type="submit" isFilled>
               {t('button.signup')}
             </ButtonForm>
-            <ButtonForm type="button">{t('button.login')}</ButtonForm>
+            <ButtonForm type="button" isDivider>
+              {t('button.login')}
+            </ButtonForm>
           </>
         )}
       </form>
