@@ -29,21 +29,18 @@ function SignupForm() {
       <form onSubmit={onSubmit}>
         <InputText
           label="Nombre"
-          type="text"
           name={AUTH_INPUTS.firstName}
           inputRef={register({ required: 'Requerido' })}
           error={errors[AUTH_INPUTS.firstName]?.message}
         />
         <InputText
           label="Apellido"
-          type="text"
           name={AUTH_INPUTS.lastName}
           inputRef={register({ required: 'Requerido' })}
           error={errors[AUTH_INPUTS.lastName]?.message}
         />
         <InputText
           label="Email"
-          type="text"
           name={AUTH_INPUTS.email}
           inputRef={register({
             required: 'Requerido',
@@ -76,7 +73,9 @@ function SignupForm() {
         <ButtonForm type="submit" isFilled>
           Sign Up
         </ButtonForm>
-        <ButtonForm type="button">Login</ButtonForm>
+        <ButtonForm type="button" isDivider>
+          Login
+        </ButtonForm>
       </form>
     </div>
   );
