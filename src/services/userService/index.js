@@ -1,16 +1,8 @@
 /* eslint-disable camelcase */
-import { create } from 'apisauce';
-
-const API = create({
-  baseURL: process.env.REACT_APP_BASE_API_URL,
-  headers: {
-    'Content-Type': 'application/json',
-    Accept: 'application/json'
-  }
-});
+import { api } from '../../constants/api';
 
 export const login = credentials =>
-  API.post('/users/sessions', {
+  api.post('/users/sessions', {
     session: {
       email: credentials.email,
       password: credentials.password
@@ -18,7 +10,7 @@ export const login = credentials =>
   });
 
 export const signUp = userData =>
-  API.post('/users', {
+  api.post('/users', {
     email: userData.email,
     password: userData.password,
     password_confirmation: userData.confirmPassword,
