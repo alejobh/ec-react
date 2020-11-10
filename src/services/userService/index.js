@@ -1,5 +1,4 @@
-// eslint-disable-next-line
-import { api } from '../../config';
+import api from '../../config/api';
 
 export const login = credentials => api.post('/users/sessions', credentials);
 
