@@ -1,5 +1,5 @@
-/* eslint-disable camelcase */
-import api from '../../config/api';
+// eslint-disable-next-line
+import { api } from '../../config';
 
 export const login = credentials => api.post('/users/sessions', credentials);
 
