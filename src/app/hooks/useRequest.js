@@ -7,13 +7,11 @@ const useRequest = ({ request, payload }) => {
   const [submitError, setSubmitError] = useState([]);
   const [response, setResponse] = useState();
 
-  const sendRequest = () => {
+  const sendRequest = dataPayload => {
     setIsLoading(true);
-    request(payload).then(data => {
+    request(dataPayload).then(data => {
       if (data && data.ok) {
-        setSubmitError([]);
-        // eslint-disable-next-line no-console
-        console.log(data);
+        setSubmitError(null);
       } else {
         setSubmitError(errorApiHandler(data));
       }
@@ -27,10 +25,10 @@ const useRequest = ({ request, payload }) => {
       return;
     }
 
-    sendRequest();
+    sendRequest(payload);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [payload, request]);
-  return [isLoading, submitError, sendRequest, response];
+  return [isLoading, submitError, response, sendRequest];
 };
 
 export default useRequest;
