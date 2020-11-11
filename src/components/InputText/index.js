@@ -6,7 +6,7 @@ import styles from './styles.module.scss';
 function InputText({ label, type = 'text', name, inputRef, error }) {
   return (
     <div className={styles.inputText}>
-      <label className={styles.label} htmlFor={name}>
+      <label className={styles.label} htmlFor={name} aria-label={name}>
         {label}
       </label>
       {error && <span className={styles.error}>{error}</span>}

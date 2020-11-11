@@ -5,6 +5,7 @@ import { render, fireEvent, waitForElement, screen } from '@testing-library/reac
 import 'mutationobserver-shim';
 
 import '@testing-library/jest-dom/extend-expect';
+
 import SignupForm from './index';
 
 const statusServerError = 500;
@@ -32,28 +33,27 @@ test('All fields are completed', async () => {
 
   render(<SignupForm />);
 
-  const inputName = screen.getByLabelText('signup.form.name.label');
+  const inputName = screen.getByRole('textbox', { name: 'firstName' });
 
   fireEvent.change(inputName, { target: { value: 'First Name Example' } });
 
-  fireEvent.click(screen.getByRole('button', { name: 'button.signup' }));
+  fireEvent.click(screen.getByRole('button', { name: 'signUpButton' }));
 
-  await waitForElement(() => screen.queryAllByText('required'));
-  const inputsAmmount = 4;
-
-  expect(screen.queryAllByText('required').length).toBe(inputsAmmount);
+  await waitForElement(() => screen.queryAllByText('Requerido'));
+  const errorsAmmount = 4;
+  expect(screen.queryAllByText('Requerido').length).toBe(errorsAmmount);
 });
 
 test('The email is invalid', async () => {
   render(<SignupForm />);
 
-  const inputEmail = screen.getByLabelText('signup.form.email.label');
+  const inputEmail = screen.getByRole('textbox', { name: 'lastName' });
 
   fireEvent.change(inputEmail, { target: { value: 'Invalidmail@' } });
 
-  fireEvent.click(screen.getByRole('button', { name: 'button.signup' }));
+  fireEvent.click(screen.getByRole('button', { name: 'signUpButton' }));
 
-  await waitForElement(() => screen.queryAllByText('email inválido'));
+  await waitForElement(() => screen.getByText('email inválido'));
 
   expect(screen.getByText('email inválido')).toHaveTextContent('email inválido');
 });
