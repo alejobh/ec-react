@@ -5,6 +5,7 @@ import { AppContainer } from 'react-hot-loader';
 import App from './components/App';
 import './scss/application.scss';
 import { register } from './serviceWorker';
+import './config';
 
 const render = () => {
   ReactDOM.render(
