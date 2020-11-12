@@ -59,21 +59,26 @@ describe('SignupForm', () => {
   });
 
   test('The email is incorrect', async () => {
-    const inputName = screen.getByTestId('firstName');
-    const inputLastName = screen.getByTestId('lastName');
     const inputEmail = screen.getByTestId('email');
+    const signUpButton = screen.getByTestId('signUpButton');
+
+    fireEvent.change(inputEmail, { target: { value: 'Invalid mail' } });
+    fireEvent.click(signUpButton);
+
+    const error = await waitFor(() => screen.getByTestId('emailError'));
+    expect(error).toBeInTheDocument();
+  });
+
+  test('The password is incorrect', async () => {
     const inputPassword = screen.getByTestId('password');
     const inputConfirmPassword = screen.getByTestId('confirmPassword');
     const signUpButton = screen.getByTestId('signUpButton');
 
-    fireEvent.change(inputName, { target: { value: 'First Name Example' } });
-    fireEvent.change(inputLastName, { target: { value: 'Last Name Example' } });
-    fireEvent.change(inputEmail, { target: { value: 'Invalid mail' } });
-    fireEvent.change(inputPassword, { target: { value: 'Password123' } });
-    fireEvent.change(inputConfirmPassword, { target: { value: 'Password123' } });
-
+    fireEvent.change(inputPassword, { target: { value: '123' } });
+    fireEvent.change(inputConfirmPassword, { target: { value: '321' } });
     fireEvent.click(signUpButton);
-    const error = await waitFor(() => screen.getByTestId('emailError'));
+
+    const error = await waitFor(() => screen.getByTestId('confirmPasswordError'));
     expect(error).toBeInTheDocument();
   });
 
