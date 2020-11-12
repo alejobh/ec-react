@@ -9,8 +9,12 @@ function InputText({ label, type = 'text', name, inputRef, error }) {
       <label className={styles.label} htmlFor={name}>
         {label}
       </label>
-      {error && <span className={styles.error}>{error}</span>}
-      <input className={styles.input} name={name} id={name} type={type} ref={inputRef} />
+      {error && (
+        <span className={styles.error} data-testid={`${name}Error`}>
+          {error}
+        </span>
+      )}
+      <input className={styles.input} name={name} id={name} type={type} ref={inputRef} data-testid={name} />
     </div>
   );
 }

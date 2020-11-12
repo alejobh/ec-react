@@ -1,25 +1,9 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-import Signup from '../../screens/Signup';
-import Login from '../../screens/Login';
+import Router from '../Router';
 
 function App() {
-  return (
-    <Router>
-      <Switch>
-        <Route exact path="/">
-          <Signup />
-        </Route>
-        <Route path="/signin">
-          <Login />
-        </Route>
-        <Route path="/signup">
-          <Signup />
-        </Route>
-      </Switch>
-    </Router>
-  );
+  return <Router />;
 }
 
 export default App;

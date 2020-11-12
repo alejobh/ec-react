@@ -1,18 +1,16 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 
 import App from './components/App';
 import './scss/application.scss';
 import { register } from './serviceWorker';
-import './i18n';
+import './config';
 
 const render = () => {
   ReactDOM.render(
     <AppContainer>
-      <Suspense fallback="loading">
-        <App />
-      </Suspense>
+      <App />
     </AppContainer>,
     document.getElementById('root')
   );
