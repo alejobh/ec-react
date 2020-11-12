@@ -1,14 +1,13 @@
 import React from 'react';
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
-import { render, fireEvent, waitForElement, screen } from '@testing-library/react';
-import 'mutationobserver-shim';
-
+import { render, fireEvent, waitFor, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
+import 'mutationobserver-shim';
 
 import SignupForm from './index';
 
-const statusServerError = 500;
+const statusErrorUnprocessableEntity = 422;
 
 const server = setupServer();
 
@@ -20,7 +19,7 @@ afterEach(() => server.resetHandlers());
 beforeEach(() => {
   jest.resetModules();
   process.env = { ...OLD_ENV };
-  process.env.REACT_APP_BASE_API_URL = 'api-test';
+  process.env.REACT_APP_BASE_API_URL = 'http://api-test';
 });
 
 afterAll(() => {
@@ -28,54 +27,41 @@ afterAll(() => {
   server.close();
 });
 
-test('All fields are completed', async () => {
-  server.use(rest.get('api-test/signup', (req, res, ctx) => res(ctx.status(statusServerError))));
+const mockApiResponseError = {
+  status: 'error',
+  errors: {
+    fullMessages: ['Password is too short (minimum is 6 characters)']
+  }
+};
 
-  render(<SignupForm />);
+describe('SignupForm', () => {
+  beforeEach(() => {
+    render(<SignupForm />);
+  });
 
-  const inputName = screen.getByRole('textbox', { name: 'firstName' });
+  test('The data is entered incorrectly', async () => {
+    server.use(
+      rest.post(`${process.env.REACT_APP_BASE_API_URL}/users`, (req, res, ctx) =>
+        res(ctx.status(statusErrorUnprocessableEntity), ctx.json(mockApiResponseError))
+      )
+    );
 
-  fireEvent.change(inputName, { target: { value: 'First Name Example' } });
+    const inputName = screen.getByTestId('firstName');
+    const inputLastName = screen.getByTestId('lastName');
+    const inputEmail = screen.getByTestId('email');
+    const inputPassword = screen.getByTestId('password');
+    const inputConfirmPassword = screen.getByTestId('confirmPassword');
+    const signUpButton = screen.getByTestId('signUpButton');
 
-  fireEvent.click(screen.getByRole('button', { name: 'signUpButton' }));
+    fireEvent.change(inputName, { target: { value: 'First Name Example' } });
+    fireEvent.change(inputLastName, { target: { value: 'Last Name Example' } });
+    fireEvent.change(inputEmail, { target: { value: 'email@email.com' } });
+    fireEvent.change(inputPassword, { target: { value: 'short' } });
+    fireEvent.change(inputConfirmPassword, { target: { value: 'short' } });
 
-  await waitForElement(() => screen.queryAllByText('Requerido'));
-  const errorsAmmount = 4;
-  expect(screen.queryAllByText('Requerido').length).toBe(errorsAmmount);
-});
+    fireEvent.click(signUpButton);
 
-test('The email is invalid', async () => {
-  render(<SignupForm />);
-
-  const inputEmail = screen.getByRole('textbox', { name: 'lastName' });
-
-  fireEvent.change(inputEmail, { target: { value: 'Invalidmail@' } });
-
-  fireEvent.click(screen.getByRole('button', { name: 'signUpButton' }));
-
-  await waitForElement(() => screen.getByText('email inválido'));
-
-  expect(screen.getByText('email inválido')).toHaveTextContent('email inválido');
-});
-
-test('Passwords do not match', async () => {
-  render(<SignupForm />);
-
-  const inputName = screen.getByLabelText('signup.form.name.label');
-  const inputLastName = screen.getByLabelText('signup.form.lastName.label');
-  const inputEmail = screen.getByLabelText('signup.form.email.label');
-  const inputPassword = screen.getByLabelText('signup.form.password.label');
-  const inputConfirmPassword = screen.getByLabelText('signup.form.confirmPassword.label');
-
-  fireEvent.change(inputName, { target: { value: 'Name' } });
-  fireEvent.change(inputLastName, { target: { value: 'Last Name' } });
-  fireEvent.change(inputEmail, { target: { value: 'example@example.com' } });
-  fireEvent.change(inputPassword, { target: { value: 'password1' } });
-  fireEvent.change(inputConfirmPassword, { target: { value: 'password2' } });
-
-  fireEvent.click(screen.getByRole('button', { name: 'button.signup' }));
-
-  await waitForElement(() => screen.queryAllByText('signup.form.confirmPassword.error'));
-
-  expect(screen.queryAllByText('signup.form.confirmPassword.error').length).toBe(1);
+    const error = await waitFor(() => screen.getByTestId('error'));
+    expect(error).toBeInTheDocument();
+  });
 });

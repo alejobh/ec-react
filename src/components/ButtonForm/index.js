@@ -10,7 +10,7 @@ function ButtonForm({ type = 'button', name = '', isFilled, isDivider, children 
     <button
       type={type}
       className={clsx(styles.button, { [styles.buttonFill]: isFilled }, { [styles.isDivider]: isDivider })}
-      aria-label={name}
+      data-testid={name}
     >
       {children}
     </button>

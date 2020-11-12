@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.5.0",
-    "@testing-library/user-event": "^7.2.1",
     "apisauce": "^2.0.0",
     "cerealizr": "^1.0.1-alpha",
     "clsx": "^1.1.1",
@@ -49,6 +46,8 @@
   "devDependencies": {
     "@babel/plugin-proposal-optional-chaining": "^7.11.0",
     "@rescripts/cli": "0.0.13",
+    "@testing-library/jest-dom": "^5.11.5",
+    "@testing-library/react": "^11.1.2",
     "@types/enzyme": "^3.10.7",
     "@types/react-spinkit": "^3.0.6",
     "@types/react-test-renderer": "^16.9.3",

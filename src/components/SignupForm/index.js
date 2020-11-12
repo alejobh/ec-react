@@ -30,7 +30,7 @@ function SignupForm() {
     <div className={styles.signupForm}>
       <img src={logo} className={styles.logo} />
       {submitError.length ? (
-        <div className={styles.submitErrors} key={submitError}>
+        <div className={styles.submitErrors} data-testid="error">
           - {submitError}
         </div>
       ) : null}
@@ -79,7 +79,7 @@ function SignupForm() {
           error={errors[AUTH_INPUTS.confirmPassword]?.message}
         />
         {isLoading ? (
-          <div>{t('FormValidations:loading')}...</div>
+          <div data-testid="loading">{t('FormValidations:loading')}...</div>
         ) : (
           <>
             <ButtonForm type="submit" name="signUpButton" isFilled>

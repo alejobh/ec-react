@@ -6,11 +6,11 @@ import styles from './styles.module.scss';
 function InputText({ label, type = 'text', name, inputRef, error }) {
   return (
     <div className={styles.inputText}>
-      <label className={styles.label} htmlFor={name} aria-label={name}>
+      <label className={styles.label} htmlFor={name}>
         {label}
       </label>
       {error && <span className={styles.error}>{error}</span>}
-      <input className={styles.input} name={name} id={name} type={type} ref={inputRef} />
+      <input className={styles.input} name={name} id={name} type={type} ref={inputRef} data-testid={name} />
     </div>
   );
 }
