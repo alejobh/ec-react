@@ -3,24 +3,19 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.5.0",
-    "@testing-library/user-event": "^7.2.1",
     "apisauce": "^2.0.0",
+    "cerealizr": "^1.0.1-alpha",
     "clsx": "^1.1.1",
-    "i18next": "^19.8.3",
-    "i18next-browser-languagedetector": "^6.0.1",
-    "i18next-http-backend": "^1.0.21",
+    "i18next": "^13.1.5",
     "mutationobserver-shim": "^0.3.7",
     "node-sass": "^4.14.1",
     "postcss": "^7.0.35",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-hook-form": "^6.9.6",
-    "react-i18next": "^11.7.3",
-    "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
-    "wolox-equalizer": "0.0.3"
+    "wolox-equalizer": "0.0.3",
+    "react-router-dom": "^5.2.0"
   },
   "scripts": {
     "start": "node ./scripts/start.js development",
@@ -52,6 +47,8 @@
   "devDependencies": {
     "@babel/plugin-proposal-optional-chaining": "^7.11.0",
     "@rescripts/cli": "0.0.13",
+    "@testing-library/jest-dom": "^5.11.5",
+    "@testing-library/react": "^11.1.2",
     "@types/enzyme": "^3.10.7",
     "@types/react-spinkit": "^3.0.6",
     "@types/react-test-renderer": "^16.9.3",
