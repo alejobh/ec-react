@@ -15,7 +15,7 @@ import styles from './styles.module.scss';
 function SignupForm() {
   const [userData, setUserData] = useState();
   const { register, handleSubmit, errors, getValues } = useForm();
-  const [isLoading, submitError] = useRequest({ request: signUp, payload: userData });
+  const [isLoading, submitError, response] = useRequest({ request: signUp, payload: userData });
   const onSubmit = handleSubmit(({ firstName, lastName, email, password, confirmPassword }) => {
     setUserData({
       firstName,
@@ -24,6 +24,8 @@ function SignupForm() {
       password,
       confirmPassword
     });
+    // eslint-disable-next-line no-console
+    console.log(response);
   });
 
   return (
@@ -79,7 +81,7 @@ function SignupForm() {
           error={errors[AUTH_INPUTS.confirmPassword]?.message}
         />
         {isLoading ? (
-          <div data-testid="loading">{t('FormValidations:loading')}...</div>
+          <p data-testid="loading">{t('FormValidations:loading')}...</p>
         ) : (
           <>
             <ButtonForm type="submit" name="signUpButton" isFilled>

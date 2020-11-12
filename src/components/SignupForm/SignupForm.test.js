@@ -9,24 +9,6 @@ import SignupForm from './index';
 
 const statusErrorUnprocessableEntity = 422;
 
-const server = setupServer();
-
-const OLD_ENV = process.env;
-
-beforeAll(() => server.listen());
-afterEach(() => server.resetHandlers());
-
-beforeEach(() => {
-  jest.resetModules();
-  process.env = { ...OLD_ENV };
-  process.env.REACT_APP_BASE_API_URL = 'http://api-test';
-});
-
-afterAll(() => {
-  process.env = OLD_ENV;
-  server.close();
-});
-
 const mockApiResponseError = {
   status: 'error',
   errors: {
@@ -34,18 +16,29 @@ const mockApiResponseError = {
   }
 };
 
+const server = setupServer(
+  rest.post(`${process.env.REACT_APP_BASE_API_URL}/users`, (req, res, ctx) =>
+    res(ctx.status(statusErrorUnprocessableEntity), ctx.json(mockApiResponseError))
+  )
+);
+
+beforeAll(() => server.listen());
+afterEach(() => server.resetHandlers());
+
+beforeEach(() => {
+  jest.resetModules();
+});
+
+afterAll(() => {
+  server.close();
+});
+
 describe('SignupForm', () => {
   beforeEach(() => {
     render(<SignupForm />);
   });
 
   test('The data is entered incorrectly', async () => {
-    server.use(
-      rest.post(`${process.env.REACT_APP_BASE_API_URL}/users`, (req, res, ctx) =>
-        res(ctx.status(statusErrorUnprocessableEntity), ctx.json(mockApiResponseError))
-      )
-    );
-
     const inputName = screen.getByTestId('firstName');
     const inputLastName = screen.getByTestId('lastName');
     const inputEmail = screen.getByTestId('email');
@@ -63,5 +56,32 @@ describe('SignupForm', () => {
 
     const error = await waitFor(() => screen.getByTestId('error'));
     expect(error).toBeInTheDocument();
+  });
+
+  test('The email is incorrect', async () => {
+    const inputName = screen.getByTestId('firstName');
+    const inputLastName = screen.getByTestId('lastName');
+    const inputEmail = screen.getByTestId('email');
+    const inputPassword = screen.getByTestId('password');
+    const inputConfirmPassword = screen.getByTestId('confirmPassword');
+    const signUpButton = screen.getByTestId('signUpButton');
+
+    fireEvent.change(inputName, { target: { value: 'First Name Example' } });
+    fireEvent.change(inputLastName, { target: { value: 'Last Name Example' } });
+    fireEvent.change(inputEmail, { target: { value: 'Invalid mail' } });
+    fireEvent.change(inputPassword, { target: { value: 'Password123' } });
+    fireEvent.change(inputConfirmPassword, { target: { value: 'Password123' } });
+
+    fireEvent.click(signUpButton);
+    const error = await waitFor(() => screen.getByTestId('emailError'));
+    expect(error).toBeInTheDocument();
+  });
+
+  test('If there is a wrong field cannot submit the form', () => {
+    const signUpButton = screen.getByTestId('signUpButton');
+
+    fireEvent.click(signUpButton);
+    expect(signUpButton).toBeInTheDocument();
+    expect(screen.queryByTestId('loading')).toBeNull();
   });
 });
