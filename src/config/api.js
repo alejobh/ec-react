@@ -1,6 +1,5 @@
 import { create } from 'apisauce';
 import { CamelcaseSerializer, SnakecaseSerializer } from 'cerealizr';
-
 const api = create({
   baseURL: process.env.REACT_APP_BASE_API_URL,
   headers: {
