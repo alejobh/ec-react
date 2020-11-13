@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { t } from 'i18next';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 import logo from '../../app/assets/logo.png';
 import ButtonForm from '../ButtonForm';
 import InputText from '../InputText';
 import { emailPattern } from '../../utils/formValidations';
 import { login } from '../../services/userService';
-import useRequest from '../../hooks/useRequest';
+import useRequest from '../../app/hooks/useRequest';
 import { AUTH_INPUTS } from '../../constants/forms';
 
 import styles from './styles.module.scss';
@@ -22,14 +22,16 @@ function LoginForm() {
       email,
       password
     });
-    // eslint-disable-next-line no-console
-    console.log(response);
   });
+
+  if (response && response.ok && response.headers && response.headers.accessToken) {
+    return <Redirect to="/" />;
+  }
 
   return (
     <div className={styles.loginForm}>
       <img src={logo} className={styles.logo} />
-      {submitError.length ? (
+      {submitError && submitError.length ? (
         <div className={styles.submitErrors} data-testid="error">
           - {submitError}
         </div>
@@ -48,7 +50,7 @@ function LoginForm() {
           label={t('LoginForm:labelPassword')}
           type="password"
           name={AUTH_INPUTS.password}
-          inputRef={register({ required: t('required') })}
+          inputRef={register({ required: t('FormValidations:required') })}
           error={errors[AUTH_INPUTS.password]?.message}
         />
         {isLoading ? (

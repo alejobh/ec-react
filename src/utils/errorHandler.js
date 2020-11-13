@@ -6,6 +6,10 @@ export const errorApiHandler = response => {
   if (response.data) {
     const { data } = response;
 
+    if (data && data.errors && data.errors.length) {
+      error = data.errors[0];
+    }
+
     if (data && data.errors && data.errors.fullMessages && data.errors.fullMessages.length) {
       error = data.errors.fullMessages[0];
     }

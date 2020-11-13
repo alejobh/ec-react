@@ -32,7 +32,7 @@ function SignupForm() {
   return (
     <div className={styles.signupForm}>
       <img src={logo} className={styles.logo} />
-      {submitError.length ? (
+      {submitError && submitError.length ? (
         <div className={styles.submitErrors} data-testid="error">
           - {submitError}
         </div>

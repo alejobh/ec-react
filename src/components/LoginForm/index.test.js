@@ -1,81 +1,76 @@
 import React from 'react';
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
-import { render, fireEvent, waitForElement, screen } from '@testing-library/react';
-import 'mutationobserver-shim';
-
+import { render, fireEvent, waitFor, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import SignupForm from './index';
+import 'mutationobserver-shim';
+import { BrowserRouter as Router } from 'react-router-dom';
 
-const statusServerError = 500;
+import LoginForm from './index';
 
-const server = setupServer();
+const statusErrorUnprocessableEntity = 422;
 
-const OLD_ENV = process.env;
+const mockApiResponseError = {
+  status: 'error',
+  errors: ['Invalid login credentials']
+};
+
+const server = setupServer(
+  rest.post(`${process.env.REACT_APP_BASE_API_URL}/users/sign_in`, (req, res, ctx) =>
+    res(ctx.status(statusErrorUnprocessableEntity), ctx.json(mockApiResponseError))
+  )
+);
 
 beforeAll(() => server.listen());
 afterEach(() => server.resetHandlers());
 
 beforeEach(() => {
   jest.resetModules();
-  process.env = { ...OLD_ENV };
-  process.env.REACT_APP_BASE_API_URL = 'api-test';
 });
 
 afterAll(() => {
-  process.env = OLD_ENV;
   server.close();
 });
 
-test('All fields are completed', async () => {
-  server.use(rest.get('api-test/signup', (req, res, ctx) => res(ctx.status(statusServerError))));
+describe('LoginForm', () => {
+  beforeEach(() => {
+    render(
+      <Router>
+        <LoginForm />
+      </Router>
+    );
+  });
 
-  render(<SignupForm />);
+  test('Invalid credentals', async () => {
+    const inputEmail = screen.getByTestId('email');
+    const inputPassword = screen.getByTestId('password');
+    const loginButton = screen.getByTestId('loginButton');
 
-  const inputName = screen.getByLabelText('signup.form.name.label');
+    fireEvent.change(inputEmail, { target: { value: 'email@email.com' } });
+    fireEvent.change(inputPassword, { target: { value: 'invalid password' } });
 
-  fireEvent.change(inputName, { target: { value: 'First Name Example' } });
+    fireEvent.click(loginButton);
 
-  fireEvent.click(screen.getByRole('button', { name: 'button.signup' }));
+    const error = await waitFor(() => screen.getByTestId('error'));
+    expect(error).toBeInTheDocument();
+  });
 
-  await waitForElement(() => screen.queryAllByText('required'));
-  const inputsAmmount = 4;
+  test('The email is incorrect', async () => {
+    const inputEmail = screen.getByTestId('email');
+    const loginButton = screen.getByTestId('loginButton');
 
-  expect(screen.queryAllByText('required').length).toBe(inputsAmmount);
-});
+    fireEvent.change(inputEmail, { target: { value: 'Invalid mail' } });
+    fireEvent.click(loginButton);
 
-test('The email is invalid', async () => {
-  render(<SignupForm />);
+    const error = await waitFor(() => screen.getByTestId('emailError'));
+    expect(error).toBeInTheDocument();
+  });
 
-  const inputEmail = screen.getByLabelText('signup.form.email.label');
+  test('If there is a wrong field cannot login', () => {
+    const loginButton = screen.getByTestId('loginButton');
 
-  fireEvent.change(inputEmail, { target: { value: 'Invalidmail@' } });
-
-  fireEvent.click(screen.getByRole('button', { name: 'button.signup' }));
-
-  await waitForElement(() => screen.queryAllByText('email inválido'));
-
-  expect(screen.getByText('email inválido')).toHaveTextContent('email inválido');
-});
-
-test('Passwords do not match', async () => {
-  render(<SignupForm />);
-
-  const inputName = screen.getByLabelText('signup.form.name.label');
-  const inputLastName = screen.getByLabelText('signup.form.lastName.label');
-  const inputEmail = screen.getByLabelText('signup.form.email.label');
-  const inputPassword = screen.getByLabelText('signup.form.password.label');
-  const inputConfirmPassword = screen.getByLabelText('signup.form.confirmPassword.label');
-
-  fireEvent.change(inputName, { target: { value: 'Name' } });
-  fireEvent.change(inputLastName, { target: { value: 'Last Name' } });
-  fireEvent.change(inputEmail, { target: { value: 'example@example.com' } });
-  fireEvent.change(inputPassword, { target: { value: 'password1' } });
-  fireEvent.change(inputConfirmPassword, { target: { value: 'password2' } });
-
-  fireEvent.click(screen.getByRole('button', { name: 'button.signup' }));
-
-  await waitForElement(() => screen.queryAllByText('signup.form.confirmPassword.error'));
-
-  expect(screen.queryAllByText('signup.form.confirmPassword.error').length).toBe(1);
+    fireEvent.click(loginButton);
+    expect(loginButton).toBeInTheDocument();
+    expect(screen.queryByTestId('loading')).toBeNull();
+  });
 });
