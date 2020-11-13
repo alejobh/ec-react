@@ -1,5 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import { t } from 'i18next';
 
 import NavBar from '../../components/NavBar';
 import { clearSession } from '../../services/userService';
@@ -9,7 +10,7 @@ function Home() {
 
   const links = [
     {
-      name: 'Logout',
+      name: t('Home:linkLogout'),
       onClick: () => {
         clearSession();
         history.push('/login');
