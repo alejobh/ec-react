@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import { t } from 'i18next';
 import { Link, Redirect } from 'react-router-dom';
@@ -14,18 +14,16 @@ import { AUTH_INPUTS } from '../../constants/forms';
 import styles from './styles.module.scss';
 
 function LoginForm() {
-  const [userData, setUserData] = useState();
   const { register, handleSubmit, errors } = useForm();
-  const [isLoading, submitError, response] = useRequest({ request: login, payload: userData });
+  const [isLoading, submitError, response, sendRequest] = useRequest({ request: login });
   const onSubmit = handleSubmit(({ email, password }) => {
-    setUserData({
+    sendRequest({
       email,
       password
     });
   });
 
-  if (response && response.ok && response.headers && response.headers.accessToken) {
-    persistSession(response.headers.accessToken);
+  if (response && response.ok && persistSession(response)) {
     return <Redirect to="/" />;
   }
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { t } from 'i18next';
@@ -14,11 +14,10 @@ import { AUTH_INPUTS } from '../../constants/forms';
 import styles from './styles.module.scss';
 
 function SignupForm() {
-  const [userData, setUserData] = useState();
   const { register, handleSubmit, errors, getValues } = useForm();
-  const [isLoading, submitError, response] = useRequest({ request: signUp, payload: userData });
+  const [isLoading, submitError, response, sendRequest] = useRequest({ request: signUp });
   const onSubmit = handleSubmit(({ firstName, lastName, email, password, confirmPassword }) => {
-    setUserData({
+    sendRequest({
       firstName,
       lastName,
       email,
