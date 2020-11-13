@@ -4,12 +4,11 @@ import { Route, Redirect } from 'react-router-dom';
 import { isLoggedIn } from '../../services/userService';
 
 function PublicRoute({ children, ...rest }) {
-  const isLogged = isLoggedIn();
   return (
     <Route
       {...rest}
       render={({ location }) =>
-        isLogged ? (
+        isLoggedIn() ? (
           <Redirect
             to={{
               pathname: '/',

@@ -6,8 +6,8 @@ import styles from './styles.module.scss';
 function Book({ book }) {
   return (
     <div className={styles.book}>
-      <img src={book.imageUrl} alt={book.title} />
-      <span>{book.title}</span>
+      <img className={styles.img} src={book.imageUrl} alt={book.title} />
+      <span className={styles.title}>{book.title}</span>
       <span>{book.author}</span>
     </div>
   );
