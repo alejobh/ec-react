@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { t } from 'i18next';
 
@@ -25,9 +25,11 @@ function SignupForm() {
       password,
       confirmPassword
     });
-    // eslint-disable-next-line no-console
-    console.log(response);
   });
+
+  if (response && response.ok) {
+    return <Redirect to="/login" />;
+  }
 
   return (
     <div className={styles.signupForm}>
