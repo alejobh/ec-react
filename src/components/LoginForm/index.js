@@ -7,7 +7,7 @@ import logo from '../../app/assets/logo.png';
 import ButtonForm from '../ButtonForm';
 import InputText from '../InputText';
 import { emailPattern } from '../../utils/formValidations';
-import { login } from '../../services/userService';
+import { login, persistSession } from '../../services/userService';
 import useRequest from '../../app/hooks/useRequest';
 import { AUTH_INPUTS } from '../../constants/forms';
 
@@ -25,6 +25,7 @@ function LoginForm() {
   });
 
   if (response && response.ok && response.headers && response.headers.accessToken) {
+    persistSession(response.headers.accessToken);
     return <Redirect to="/" />;
   }
 
