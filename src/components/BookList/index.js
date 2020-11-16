@@ -27,7 +27,7 @@ function BookList() {
     <div className={styles.bookList}>
       {isLoading && <p data-testid="loading">{t('General:loadingContent')}...</p>}
       {books.map(book => (
-        <Link to={PATHS.bookDetail + book.id} key={book.id}>
+        <Link to={PATHS.bookDetail.replace(':bookId', book.id)} key={book.id}>
           <Book book={book} />
         </Link>
       ))}

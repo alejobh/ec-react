@@ -13,9 +13,9 @@ function Router() {
   return (
     <BrowserRouter>
       <Switch>
+        <PrivateRoute path={PATHS.bookDetail} component={Books} />
         <PublicRoute path={PATHS.login} component={Login} />
         <PublicRoute path={PATHS.signup} component={Signup} />
-        <PrivateRoute path={PATHS.books} component={Books} />
         <PrivateRoute path={PATHS.root} component={Home} />
       </Switch>
     </BrowserRouter>
