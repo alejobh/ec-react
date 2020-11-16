@@ -10,6 +10,7 @@ import { isPasswordEqual, emailPattern } from '../../utils/formValidations';
 import { signUp } from '../../services/userService';
 import useRequest from '../../app/hooks/useRequest';
 import { AUTH_INPUTS } from '../../constants/forms';
+import { PATHS } from '../../constants/paths';
 
 import styles from './styles.module.scss';
 
@@ -88,7 +89,7 @@ function SignupForm() {
             <ButtonForm type="submit" name="signUpButton" isFilled>
               {t('FormValidations:signup')}
             </ButtonForm>
-            <Link to="/login">
+            <Link to={PATHS.login} className={styles.link}>
               <ButtonForm name="loginButton" isDivider>
                 {t('FormValidations:login')}
               </ButtonForm>
