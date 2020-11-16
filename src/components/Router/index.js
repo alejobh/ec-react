@@ -1,23 +1,24 @@
 import React from 'react';
 import { BrowserRouter, Switch } from 'react-router-dom';
 
-import Signup from '../../screens/Signup';
-import Login from '../../screens/Login';
+import SignupForm from '../../screens/SignupForm';
+import LoginForm from '../../screens/LoginForm';
 import Home from '../../screens/Home';
 import PrivateRoute from '../PrivateRoute';
 import PublicRoute from '../PublicRoute';
+import { PATHS } from '../../constants/paths';
 
 function Router() {
   return (
     <BrowserRouter>
       <Switch>
-        <PublicRoute path="/login">
-          <Login />
+        <PublicRoute path={PATHS.login}>
+          <LoginForm />
         </PublicRoute>
-        <PublicRoute path="/signup">
-          <Signup />
+        <PublicRoute path={PATHS.signup}>
+          <SignupForm />
         </PublicRoute>
-        <PrivateRoute exact path="/">
+        <PrivateRoute exact path={PATHS.root}>
           <Home />
         </PrivateRoute>
       </Switch>

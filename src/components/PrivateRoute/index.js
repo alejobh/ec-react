@@ -5,6 +5,7 @@ import { isLoggedIn } from '../../services/userService';
 
 function PrivateRoute({ children, ...rest }) {
   const isLogged = isLoggedIn();
+  console.log(isLogged);
   return (
     <Route
       {...rest}

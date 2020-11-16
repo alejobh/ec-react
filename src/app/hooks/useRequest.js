@@ -1,33 +1,14 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 
-import { errorApiHandler } from '../../utils/errorHandler';
+import useLazyRequest from './useLazyRequest';
 
 const useRequest = ({ request, payload }) => {
-  const [isLoading, setIsLoading] = useState();
-  const [submitError, setSubmitError] = useState([]);
-  const [response, setResponse] = useState();
-
-  const sendRequest = dataPayload => {
-    setIsLoading(true);
-    request(dataPayload).then(data => {
-      if (data && data.ok) {
-        setSubmitError(null);
-      } else {
-        setSubmitError(errorApiHandler(data));
-      }
-      setIsLoading(false);
-      setResponse(data);
-    });
-  };
+  const [isLoading, submitError, response, sendRequest] = useLazyRequest({ request, payload });
 
   useEffect(() => {
-    if (!payload || !Object.entries(payload).length) {
-      return;
-    }
-
     sendRequest(payload);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [payload, request]);
+  }, [payload, sendRequest]);
+
   return [isLoading, submitError, response, sendRequest];
 };
 
