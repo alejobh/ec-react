@@ -33,11 +33,11 @@ function SignupForm() {
   return (
     <div className={styles.signupForm}>
       <img src={logo} className={styles.logo} />
-      {submitError && submitError.length ? (
+      {submitError && submitError.length > 0 && (
         <div className={styles.submitErrors} data-testid="error">
           - {submitError}
         </div>
-      ) : null}
+      )}
       <form onSubmit={onSubmit}>
         <InputText
           label={t('SignupForm:labelName')}
