@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { t } from 'i18next';
-import clsx from 'clsx';
 
 import logo from '../../app/assets/logo.png';
 import ButtonForm from '../../components/ButtonForm';
@@ -33,8 +32,8 @@ function SignupForm() {
   }
 
   return (
-    <div className="column center">
-      <div className={clsx(styles.signupForm, 'column')}>
+    <div className={`column center ${styles.signupFormContainer}`}>
+      <div className={`column ${styles.signupForm}`}>
         <img src={logo} className={styles.logo} />
         {submitError && submitError.length > 0 && (
           <div className={styles.submitErrors} data-testid="error">
