@@ -15,8 +15,8 @@ const useLazyRequest = ({ request }) => {
       } else {
         setSubmitError(errorApiHandler(data));
       }
-      setIsLoading(false);
       setResponse(data);
+      setIsLoading(false);
     });
   };
   return [isLoading, submitError, response, sendRequest];

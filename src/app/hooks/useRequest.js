@@ -9,7 +9,7 @@ const useRequest = ({ request, payload }) => {
     if (!isLoading && !response) {
       sendRequest(payload);
     }
-  }, [payload, isLoading, sendRequest, response, submitError]);
+  }, [payload, isLoading, sendRequest, response]);
 
   return [isLoading, submitError, response, sendRequest];
 };
