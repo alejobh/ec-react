@@ -1,5 +1,9 @@
 @import 'variables/colors';
 
+.login-form-container {
+  padding-top: 30px;
+}
+
 .login-form {
   background-color: $white-main;
   border-top: 6px solid $blue;
@@ -9,7 +13,7 @@
 }
 
 .logo {
-  margin: 0 auto 30px;
+  margin: 0 0 30px;
 }
 
 .link {
