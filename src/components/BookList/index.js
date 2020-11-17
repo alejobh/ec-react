@@ -9,7 +9,7 @@ import Book from '../Book';
 import styles from './styles.module.scss';
 
 function BookList() {
-  const [isLoading, response] = useRequest({
+  const [isLoading, submitError, response] = useRequest({
     request: getBooks,
     payload: getAuthData()
   });
@@ -18,6 +18,7 @@ function BookList() {
 
   return (
     <div className={styles.bookList}>
+      {submitError && submitError.length > 0 && <p>{t('Errors:apiError')}</p>}
       {isLoading && <p data-testid="loading">{t('General:loadingContent')}...</p>}
       {books.map(book => (
         <Book key={book.id} book={book} />
