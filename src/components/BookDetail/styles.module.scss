@@ -3,8 +3,46 @@
 .book {
   border: 1px solid $gray-main;
   box-shadow: 0 0 13px 0 rgba(50, 50, 50, 0.91);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 5%;
+  max-width: 900px;
+  padding: 20px;
+  width: 60%;
+}
+
+.img {
+  max-width: 250px;
+}
+
+.title {
+  border-bottom: 4px solid $green;
+  color: $black;
+  font-size: 30px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+}
+
+.description {
+  flex: 1;
+  padding: 10px 50px;
+}
+
+.item {
+  font-size: 20px;
+  font-weight: 700;
+  padding: 15px 0;
+}
+
+.value {
+  font-size: 20px;
+}
+
+.options {
+  margin: 70px 0;
+  max-width: 900px;
+  width: 100%;
+}
+
+.option {
+  font-size: 20px;
+  color: $black;
 }

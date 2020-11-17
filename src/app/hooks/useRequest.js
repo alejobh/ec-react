@@ -1,27 +1,15 @@
-import { useState } from 'react';
+import { useEffect } from 'react';
 
-import { errorApiHandler } from '../../utils/errorHandler';
+import useLazyRequest from './useLazyRequest';
 
-const useRequest = ({ request }) => {
-  const [isLoading, setIsLoading] = useState();
-  const [submitError, setSubmitError] = useState();
-  const [response, setResponse] = useState();
+const useRequest = ({ request, payload }) => {
+  const [isLoading, submitError, response, sendRequest] = useLazyRequest({ request });
 
-  const sendRequest = dataPayload => {
-    if (isLoading) {
-      return;
+  useEffect(() => {
+    if (!isLoading && !response) {
+      sendRequest(payload);
     }
-    setIsLoading(true);
-    request(dataPayload).then(data => {
-      if (data && data.ok) {
-        setSubmitError(null);
-      } else {
-        setSubmitError(errorApiHandler(data));
-      }
-      setResponse(data);
-      setIsLoading(false);
-    });
-  };
+  }, [payload, isLoading, sendRequest, response, submitError]);
 
   return [isLoading, submitError, response, sendRequest];
 };
