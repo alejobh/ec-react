@@ -16,7 +16,7 @@ import styles from './styles.module.scss';
 
 function SignupForm() {
   const { register, handleSubmit, errors, getValues } = useForm();
-  const [isLoading, submitError, response, sendRequest] = useLazyRequest({ request: signUp });
+  const [isLoading, submitError, sendRequest] = useLazyRequest({ request: signUp });
   const onSubmit = handleSubmit(({ firstName, lastName, email, password, confirmPassword }) => {
     sendRequest({
       firstName,
@@ -25,8 +25,6 @@ function SignupForm() {
       password,
       confirmPassword
     });
-    // eslint-disable-next-line no-console
-    console.log(response);
   });
 
   return (
