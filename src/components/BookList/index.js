@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { t } from 'i18next';
 
 import { getBooks } from '../../services/bookService';
@@ -9,15 +9,10 @@ import Book from '../Book';
 import styles from './styles.module.scss';
 
 function BookList() {
-  const [isLoading, submitError, response, sendRequest] = useRequest({
-    request: getBooks
+  const [isLoading, response] = useRequest({
+    request: getBooks,
+    payload: getAuthData()
   });
-
-  useEffect(() => {
-    if (!response) {
-      sendRequest(getAuthData());
-    }
-  }, [response, sendRequest, submitError]);
 
   const books = response && response.data && response.data.page ? response.data.page : [];
 
