@@ -7,12 +7,12 @@ import styles from './styles.module.scss';
 
 function NavBar({ links }) {
   return (
-    <div className={styles.navBar}>
+    <div className={`row space-between ${styles.navBar}`}>
       <img src={logo} className={styles.logo} />
-      <div>
+      <ul>
         {links &&
           links.map(link => (
-            <span
+            <li
               className={styles.link}
               key={link.name}
               onClick={() => {
@@ -20,9 +20,9 @@ function NavBar({ links }) {
               }}
             >
               {link.name}
-            </span>
+            </li>
           ))}
-      </div>
+      </ul>
     </div>
   );
 }

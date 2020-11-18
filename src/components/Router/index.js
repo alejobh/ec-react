@@ -1,22 +1,21 @@
 import React from 'react';
 import { BrowserRouter, Switch } from 'react-router-dom';
 
-import Signup from '../../screens/Signup';
-import Login from '../../screens/Login';
+import SignupForm from '../../screens/SignupForm';
+import LoginForm from '../../screens/LoginForm';
 import Books from '../../screens/Books';
 import Home from '../../screens/Home';
-import PrivateRoute from '../PrivateRoute';
-import PublicRoute from '../PublicRoute';
+import HandleRoute from '../HandleRoute';
 import { PATHS } from '../../constants/paths';
 
 function Router() {
   return (
     <BrowserRouter>
       <Switch>
-        <PrivateRoute path={PATHS.bookDetail} component={Books} />
-        <PublicRoute path={PATHS.login} component={Login} />
-        <PublicRoute path={PATHS.signup} component={Signup} />
-        <PrivateRoute path={PATHS.root} component={Home} />
+        <HandleRoute path={PATHS.bookDetail} component={Books} isPrivate />
+        <HandleRoute path={PATHS.login} component={LoginForm} />
+        <HandleRoute path={PATHS.signup} component={SignupForm} />
+        <HandleRoute exact path={PATHS.root} component={Home} isPrivate />
       </Switch>
     </BrowserRouter>
   );
