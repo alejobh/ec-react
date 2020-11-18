@@ -5,3 +5,8 @@ export const AUTH_INPUTS = {
   password: 'password',
   confirmPassword: 'confirmPassword'
 };
+
+export const LOGIN_INPUTS = {
+  email: 'email',
+  password: 'password'
+};

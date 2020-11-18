@@ -4,6 +4,7 @@ import { setupServer } from 'msw/node';
 import { render, fireEvent, waitFor, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import 'mutationobserver-shim';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 import SignupForm from './index';
 
@@ -35,7 +36,11 @@ afterAll(() => {
 
 describe('SignupForm', () => {
   beforeEach(() => {
-    render(<SignupForm />);
+    render(
+      <Router>
+        <SignupForm />
+      </Router>
+    );
   });
 
   test('The data is entered incorrectly', async () => {
