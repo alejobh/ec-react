@@ -7,7 +7,7 @@ import logo from '../../app/assets/logo.png';
 import ButtonForm from '../../components/ButtonForm';
 import InputText from '../../components/InputText';
 import { emailPattern } from '../../utils/formValidations';
-import { login } from '../../services/userService';
+import { login, persistSession } from '../../services/userService';
 import useLazyRequest from '../../app/hooks/useLazyRequest';
 import { AUTH_INPUTS } from '../../constants/forms';
 import { PATHS } from '../../constants/paths';
@@ -26,6 +26,7 @@ function LoginForm() {
   });
 
   if (response?.ok) {
+    persistSession(response.headers.accessToken);
     history.push(PATHS.root);
   }
 

@@ -16,7 +16,7 @@ import styles from './styles.module.scss';
 
 function SignupForm() {
   const { register, handleSubmit, errors, getValues } = useForm();
-  const [isLoading, submitError, sendRequest] = useLazyRequest({ request: signUp });
+  const [isLoading, submitError, response, sendRequest] = useLazyRequest({ request: signUp });
   const onSubmit = handleSubmit(({ firstName, lastName, email, password, confirmPassword }) => {
     sendRequest({
       firstName,
@@ -26,6 +26,10 @@ function SignupForm() {
       confirmPassword
     });
   });
+
+  if (response?.ok) {
+    history.push(PATHS.login);
+  }
 
   return (
     <div className={`column center ${styles.signupFormContainer}`}>

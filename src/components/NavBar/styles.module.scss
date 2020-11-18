@@ -1,0 +1,12 @@
+@import 'variables/colors';
+
+.nav-bar {
+  align-content: stretch;
+  align-items: flex-start;
+  border-top: 4px solid $blue;
+  padding: 20px 40px;
+}
+
+.link {
+  cursor: pointer;
+}
