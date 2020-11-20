@@ -2,7 +2,7 @@
 
 .book {
   border: 1px solid $gray-main;
-  box-shadow: 0 0 13px 0 rgba(50, 50, 50, 0.91);
+  box-shadow: 0 0 13px 0 $shadow;
   max-width: 900px;
   padding: 20px;
   width: 60%;

@@ -17,14 +17,14 @@ function BookDetail() {
     payload: bookId
   });
 
-  const book = response && response.ok ? response.data : {};
+  const book = response?.ok ? response.data : {};
 
   return (
     <>
       {response && !response.ok && <p>{t('Errors:apiError')}</p>}
       {submitError && <p>{submitError}</p>}
       {isLoading && <p>{t('General:loadingContent')}...</p>}
-      {!isLoading && response && response.ok && (
+      {!isLoading && response?.ok && (
         <div className="column center">
           <div className={clsx(styles.options, 'row', 'middle')}>
             <img src={btnBack} />
