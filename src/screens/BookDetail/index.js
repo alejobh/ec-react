@@ -21,7 +21,7 @@ function BookDetail() {
 
   return (
     <>
-      {response && !response.ok && <p>{t('Errors:apiError')}</p>}
+      {!response?.ok && <p>{t('Errors:apiError')}</p>}
       {submitError && <p>{submitError}</p>}
       {isLoading && <p>{t('General:loadingContent')}...</p>}
       {!isLoading && response?.ok && (
