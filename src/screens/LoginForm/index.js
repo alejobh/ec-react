@@ -26,7 +26,7 @@ function LoginForm() {
   });
 
   if (response?.ok) {
-    persistSession(response.headers.accessToken);
+    persistSession(response);
     history.push(PATHS.root);
   }
 

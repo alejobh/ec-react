@@ -3,11 +3,13 @@ import { useEffect } from 'react';
 import useLazyRequest from './useLazyRequest';
 
 const useRequest = ({ request, payload }) => {
-  const [isLoading, submitError, response, sendRequest] = useLazyRequest({ request, payload });
+  const [isLoading, submitError, response, sendRequest] = useLazyRequest({ request });
 
   useEffect(() => {
-    sendRequest(payload);
-  }, [payload, sendRequest]);
+    if (!isLoading && !response) {
+      sendRequest(payload);
+    }
+  }, [payload, isLoading, sendRequest, response]);
 
   return [isLoading, submitError, response, sendRequest];
 };

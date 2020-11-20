@@ -1,5 +1,9 @@
 import i18next from 'i18next';
 
+i18next.addResources('es', 'General', {
+  loadingContent: 'Cargando resultados..'
+});
+
 i18next.addResources('es', 'FormValidations', {
   required: 'Requerido',
   signup: 'Sign Up',

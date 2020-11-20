@@ -1,0 +1,22 @@
+@import 'variables/colors';
+
+.book {
+  border: 1px solid $gray-main;
+  box-shadow: 0 0 13px 0 $shadow;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 5%;
+}
+
+.img {
+  max-width: 200px;
+  max-height: 220px;
+  width: 100%;
+}
+
+.title {
+  color: $black;
+  font-weight: 700;
+  padding: 10px 0;
+}

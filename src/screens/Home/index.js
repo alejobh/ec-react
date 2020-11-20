@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { t } from 'i18next';
 
 import NavBar from '../../components/NavBar';
+import BookList from '../../components/BookList';
 import { clearSession } from '../../services/userService';
 
 function Home() {
@@ -18,7 +19,12 @@ function Home() {
     }
   ];
 
-  return <NavBar links={links} />;
+  return (
+    <div>
+      <NavBar links={links} />
+      <BookList />
+    </div>
+  );
 }
 
 export default Home;

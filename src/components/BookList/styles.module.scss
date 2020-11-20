@@ -1,0 +1,11 @@
+@import 'variables/colors';
+
+.book-list {
+  align-items: center;
+  display: grid;
+  gap: 30px 30px;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  justify-items: center;
+  padding: 5% 10%;
+}
