@@ -6,10 +6,8 @@ const useRequest = ({ request, payload }) => {
   const [isLoading, submitError, response, sendRequest] = useLazyRequest({ request });
 
   useEffect(() => {
-    if (!isLoading && !response) {
-      sendRequest(payload);
-    }
-  }, [payload, isLoading, sendRequest, response]);
+    sendRequest(payload);
+  }, [payload, sendRequest]);
 
   return [isLoading, submitError, response, sendRequest];
 };
