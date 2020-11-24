@@ -5,18 +5,19 @@ import PropTypes from 'prop-types';
 import { isLoggedIn } from '../../services/userService';
 import { PATHS } from '../../constants/paths';
 
-function HandleRoute({ children, isPrivate = false, ...rest }) {
+function HandleRoute({ component: Component, isPrivate = false, ...rest }) {
   const isLogged = isLoggedIn();
   return (
     <Route
       {...rest}
-      render={({ location }) => {
+      render={props => {
         if (!isLogged && isPrivate) {
           return (
             <Redirect
               to={{
                 pathname: PATHS.login,
-                state: { from: location }
+                // eslint-disable-next-line react/prop-types
+                state: { from: props.location }
               }}
             />
           );
@@ -26,18 +27,20 @@ function HandleRoute({ children, isPrivate = false, ...rest }) {
             <Redirect
               to={{
                 pathname: PATHS.root,
-                state: { from: location }
+                // eslint-disable-next-line react/prop-types
+                state: { from: props.location }
               }}
             />
           );
         }
-        return children;
+        return <Component {...rest} {...props} />;
       }}
     />
   );
 }
 
 HandleRoute.propTypes = {
+  component: PropTypes.func,
   isPrivate: PropTypes.bool
 };
 

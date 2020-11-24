@@ -1,7 +1,8 @@
 import i18next from 'i18next';
 
 i18next.addResources('es', 'General', {
-  loadingContent: 'Cargando resultados..'
+  loadingContent: 'Cargando resultados..',
+  back: 'Atrás'
 });
 
 i18next.addResources('es', 'FormValidations', {
